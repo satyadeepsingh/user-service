@@ -2,7 +2,7 @@ package com.userservice.demo.commands.aggregates;
 
 import com.userservice.demo.commands.CreateUserCommand;
 import com.userservice.demo.commands.UpdateUserCommand;
-import com.userservice.demo.commands.repository.UserWriteRepository;
+import com.userservice.demo.commands.repositories.UserWriteRepository;
 import com.userservice.demo.domains.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -11,5 +11,5 @@ import java.util.Set;
 @ToString
 public class UserContact {
 
-    private Map<String, Set<String>> contactByType = new HashMap<>();
+    private Map<String, Set<Contact>> contactByType = new HashMap<>();
 }
