@@ -1,0 +1,11 @@
+POST http://localhost:9090/user-service/v1/user
+Content-Type: application/json
+
+{
+  "userId": "134123ewqe313",
+  "firstName": "firstname-test",
+  "lastName" : "lastname-test"
+}
+> {%
+     client.assert(response.status === 200);
+ %}
