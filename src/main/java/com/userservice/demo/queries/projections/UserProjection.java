@@ -12,6 +12,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
+/**
+ * Projection/Projector:
+ * Projection is another microservice design pattern which greatly benefits CQRS.
+ * Projection essentially means representing domain objects in different shapes and structures.
+ */
 @RequiredArgsConstructor
 @Service
 public class UserProjection {
