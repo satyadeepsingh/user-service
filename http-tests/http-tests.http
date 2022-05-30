@@ -37,6 +37,10 @@ Content-Type: application/json
   ]
 }
 
+> {%
+client.assert(response.status === 200);
+%}
+
 ###
 
 # curl -X "GET" "/v1/user/addresses?userId=userId_lcrd2&state=state_zp4si"
@@ -44,12 +48,20 @@ Content-Type: application/json
 GET http://localhost:9090/user-service/v1/user/addresses?userId=134123ewqe313&state=dubai
 Content-Type: application/json
 
+> {%
+client.assert(response.status === 200);
+%}
+
 ###
 
 # curl -X "GET" "/v1/user/contacts?userId=userId_iersg&contactType=contactType_oak68"
 #-H 'content-type: application/json' \
 GET http://localhost:9090/user-service/v1/user/contacts?userId=134123ewqe313&contactType=phone
 Content-Type: application/json
+
+> {%
+client.assert(response.status === 200);
+%}
 
 ###
 
