@@ -4,8 +4,59 @@ Content-Type: application/json
 {
   "userId": "134123ewqe313",
   "firstName": "firstname-test",
-  "lastName" : "lastname-test"
+  "lastName": "lastname-test"
 }
 > {%
      client.assert(response.status === 200);
  %}
+
+
+#######
+
+# curl -X "PUT" "http://localhost:9090/v1/user"
+#-H 'content-type: application/json'
+#-H 'Content-Type: application/json'
+#-d '{  "userId": "userId_26bqm",  "addresses": [    {      "city": "city_j4p85",      "state": "state_t3urf",      "postcode": "postcode_11vlc"    }  ],  "contacts": [    {      "type": "type_tlbtv",      "detail": "detail_gy2ud"    }  ]}' \
+PUT http://localhost:9090/user-service/v1/user
+Content-Type: application/json
+
+{
+  "userId": "134123ewqe313",
+  "addresses": [
+    {
+      "city": "dubai",
+      "state": "dubai",
+      "postcode": "121212"
+    }
+  ],
+  "contacts": [
+    {
+      "type": "phone",
+      "detail": "12345667889"
+    }
+  ]
+}
+
+###
+
+# curl -X "GET" "/v1/user/addresses?userId=userId_lcrd2&state=state_zp4si"
+#-H 'content-type: application/json' \
+GET http://localhost:9090/user-service/v1/user/addresses?userId=134123ewqe313&state=dubai
+Content-Type: application/json
+
+###
+
+# curl -X "GET" "/v1/user/contacts?userId=userId_iersg&contactType=contactType_oak68"
+#-H 'content-type: application/json' \
+GET http://localhost:9090/user-service/v1/user/contacts?userId=134123ewqe313&contactType=phone
+Content-Type: application/json
+
+###
+
+
+###
+
+
+
+
+

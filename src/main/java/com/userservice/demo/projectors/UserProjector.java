@@ -27,19 +27,21 @@ public class UserProjector {
 
         UserAddress userAddress = Optional.ofNullable(readRepository.getUserAddress(user.getUserid()))
                 .orElse(new UserAddress());
-        user.getAddresses().forEach(address -> addUserAddress(user, userAddress, address));
+        user.getAddresses().forEach(address -> addUserAddress(userAddress, address));
+        readRepository.addUserAddress(user.getUserid(), userAddress);
     }
 
-    private void addUserAddress(User user, UserAddress userAddress, Address address) {
+    private void addUserAddress(UserAddress userAddress, Address address) {
         if (userAddress.getAddressByRegion().containsKey(address.getState())) {
             Set<Address> addresses = Optional.ofNullable(userAddress.getAddressByRegion().get(address.getState()))
                     .orElse(new HashSet<>());
             addresses.add(address);
+            userAddress.getAddressByRegion().put(address.getState(), addresses);
             return;
         }
         Set<Address> addresses = new HashSet<>();
         addresses.add(address);
-        userAddress.getAddressByRegion().put(user.getUserid(), addresses);
+        userAddress.getAddressByRegion().put(address.getState(), addresses);
     }
 
     private void addUserContact(UserContact userContact, Contact contact) {
@@ -48,11 +50,12 @@ public class UserProjector {
                             .get(contact.getType()))
                     .orElse(new HashSet<>());
             contactSet.add(contact);
+            userContact.getContactByType().put(contact.getType(), contactSet);
             return;
         }
         Set<Contact> contactSet = new HashSet<>();
         contactSet.add(contact);
-        userContact.getContactByType().putIfAbsent(contact.getType(), contactSet);
+        userContact.getContactByType().put(contact.getType(), contactSet);
     }
 
 }

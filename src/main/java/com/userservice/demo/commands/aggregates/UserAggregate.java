@@ -18,7 +18,6 @@ public class UserAggregate {
     public User handleCreateUserCommand(CreateUserCommand command) {
         User user = new User(command.getUserId(), command.getFirstName(), command.getLastName());
         writeRepository.addUser(user.getUserid(), user);
-        userProjector.project(user);
         return user;
     }
 
