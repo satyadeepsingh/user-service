@@ -21,18 +21,18 @@ import java.util.Set;
 public class UserProjector {
 
     private final UserReadRepository readRepository;
-    
+
     public void project(String userId, List<Event> events) {
 
         for (Event event : events) {
-            if (event instanceof UserAddressAddedEvent)
-                apply(userId, (UserAddressAddedEvent) event);
-            if (event instanceof UserAddressRemovedEvent)
-                apply(userId, (UserAddressRemovedEvent) event);
-            if (event instanceof UserContactAddedEvent)
-                apply(userId, (UserContactAddedEvent) event);
-            if (event instanceof UserContactRemovedEvent)
-                apply(userId, (UserContactRemovedEvent) event);
+            if (event instanceof UserAddressAddedEvent e)
+                apply(userId, e);
+            if (event instanceof UserAddressRemovedEvent e)
+                apply(userId, e);
+            if (event instanceof UserContactAddedEvent e)
+                apply(userId, e);
+            if (event instanceof UserContactRemovedEvent e)
+                apply(userId, e);
         }
 
     }

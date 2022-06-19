@@ -8,7 +8,6 @@ import com.userservice.demo.domains.model.User;
 import com.userservice.demo.events.*;
 import com.userservice.demo.events.repository.EventStore;
 import com.userservice.demo.events.service.UserUtility;
-import com.userservice.demo.projectors.UserProjector;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +20,6 @@ public class UserAggregate {
 
     private final EventStore writeRepository;
 
-    private final UserProjector userProjector;
-    
     public List<Event> handleCreateUserCommand(CreateUserCommand command) {
         UserCreatedEvent event = new UserCreatedEvent(command.getUserId(), command.getFirstName(), command.getLastName());
         writeRepository.addEvent(command.getUserId(), event);
@@ -72,8 +69,6 @@ public class UserAggregate {
             events.add(addressAddedEvent);
             writeRepository.addEvent(command.getUserId(), addressAddedEvent);
         }
-
-        userProjector.project(user.getUserid(), writeRepository.getEvents(user.getUserid()));
 
         return events;
     }
