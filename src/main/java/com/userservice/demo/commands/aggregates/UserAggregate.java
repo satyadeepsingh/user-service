@@ -8,27 +8,25 @@ import com.userservice.demo.domains.model.User;
 import com.userservice.demo.events.*;
 import com.userservice.demo.events.repository.EventStore;
 import com.userservice.demo.events.service.UserUtility;
+import com.userservice.demo.projectors.UserProjector;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class UserAggregate {
 
-    private EventStore writeRepository;
+    private final EventStore writeRepository;
 
-    public UserAggregate(EventStore repository) {
-        this.writeRepository = repository;
-    }
-
+    private final UserProjector userProjector;
+    
     public List<Event> handleCreateUserCommand(CreateUserCommand command) {
         UserCreatedEvent event = new UserCreatedEvent(command.getUserId(), command.getFirstName(), command.getLastName());
         writeRepository.addEvent(command.getUserId(), event);
-        return Arrays.asList(event);
+        return List.of(event);
     }
 
     public List<Event> handleUpdateUserCommand(UpdateUserCommand command) {
@@ -74,6 +72,8 @@ public class UserAggregate {
             events.add(addressAddedEvent);
             writeRepository.addEvent(command.getUserId(), addressAddedEvent);
         }
+
+        userProjector.project(user.getUserid(), writeRepository.getEvents(user.getUserid()));
 
         return events;
     }
